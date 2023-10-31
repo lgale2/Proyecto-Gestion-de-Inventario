@@ -3,6 +3,7 @@ package com.gestionProyecto.gestion.models;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 
 @Entity
 @Table(name="inventorymovements")
@@ -13,19 +14,34 @@ public class InventoryMovementsModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_movement")
     private Long id_movimiento;
-    @Column(name = "id_product")
-    private Long idProducto;
+
+    @ManyToOne
+    @JoinColumn(name = "id_product")
+    private ProductModel idProducto;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "movement_type")
-    private String TipoMovimiento;
+    private MovementType movementType;
+    @Column(name = "movement_date")
+    private String fechaMovimiento;
     @Column(name = "quantity")
-    private Long Cantidad;
+    private Integer quantity;
     @Column(name = "unit_price")
     private Double precioUnitario;
     @Column(name = "total")
     private Double total;
     @Column(name = "invoice_preference")
     private String preferenciaFactura;
-    @Column(name = "id_employee")
-    private Long id_empleado;
+
+    @ManyToOne
+    @JoinColumn(name = "id_employee")
+    private EmployeeModel id_empleado;
+
+    public enum MovementType {
+        E,
+        S// Otras opciones como SALIDA
+    }
 
 }
+
+

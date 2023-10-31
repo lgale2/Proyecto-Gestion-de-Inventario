@@ -32,4 +32,13 @@ public class RoleService implements IRoleService{
     public void delete(Long id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public void update(RoleModel roleModel) {
+        RoleModel existingEntity = getByIdRole(roleModel.getIdRole());
+        if(existingEntity != null){
+            existingEntity.setRole(roleModel.getRole());
+            repository.save(existingEntity);
+        }
+    }
 }

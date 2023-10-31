@@ -9,7 +9,7 @@ import org.apache.catalina.User;
 import javax.persistence.*;
 
 @Entity
-@Table
+@Table(name = "usersroles")
 @Getter @Setter
 @ToString @EqualsAndHashCode
 public class UserRoleModel {

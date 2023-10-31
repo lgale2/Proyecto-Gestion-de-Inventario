@@ -14,7 +14,7 @@ public class RoleController {
     private IRoleService service;
 
     @GetMapping("/api/rolesList")
-    public List<RoleModel>getAllRoles(){
+    public List<RoleModel>getAll(){
         return service.getAllRoles();
     }
 
@@ -31,5 +31,15 @@ public class RoleController {
     @DeleteMapping("/api/role/delete/{id}")
     public void delete(@PathVariable String id){
         service.delete(Long.parseLong(id));
+    }
+
+    @PutMapping("/api/role/update/{id}")
+    public void update(@PathVariable Long id, @RequestBody RoleModel roleModel){
+        RoleModel existingRole = service.getByIdRole(id);
+
+        if (existingRole != null) {
+            existingRole.setRole(roleModel.getRole());
+            service.update(existingRole);
+        }
     }
 }

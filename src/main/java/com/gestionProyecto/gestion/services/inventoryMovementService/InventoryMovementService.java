@@ -15,4 +15,24 @@ public class InventoryMovementService implements IinventoryMovementService{
     public List<InventoryMovementsModel> getAllInventory() {
         return (List<InventoryMovementsModel>) repository.findAll();
     }
+
+    @Override
+    public InventoryMovementsModel getById(Long id) {
+        return (InventoryMovementsModel) repository.findById(id).get();
+    }
+
+    @Override
+    public void save(InventoryMovementsModel inventoryMovementsModel) {
+        repository.save(inventoryMovementsModel);
+    }
+
+    @Override
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
+
+    @Override
+    public void update(InventoryMovementsModel inventoryMovementsModel) {
+
+    }
 }

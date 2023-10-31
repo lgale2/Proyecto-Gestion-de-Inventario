@@ -12,4 +12,6 @@ public interface IRoleService{
     void save(RoleModel roleModel);
 
     void delete(Long id);
+
+    void update(RoleModel roleModel);
 }

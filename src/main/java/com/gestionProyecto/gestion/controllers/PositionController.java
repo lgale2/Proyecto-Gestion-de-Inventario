@@ -29,7 +29,7 @@ public class PositionController {
         service.save(positionModel);
     }
 
-    @DeleteMapping("/api/position/delete/id")
+    @DeleteMapping("/api/position/delete/{id}")
     public void delete(@PathVariable String id){
         service.delete(Long.parseLong(id));
     }
