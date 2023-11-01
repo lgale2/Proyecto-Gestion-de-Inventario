@@ -30,7 +30,7 @@ public class InventoryMovementsModel {
     private Double precioUnitario;
     @Column(name = "total")
     private Double total;
-    @Column(name = "invoice_preference")
+    @Column(name = "invoice_reference")
     private String preferenciaFactura;
 
     @ManyToOne

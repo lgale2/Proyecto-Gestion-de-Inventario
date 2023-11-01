@@ -3,6 +3,7 @@ package com.gestionProyecto.gestion.controllers;
 
 import com.gestionProyecto.gestion.models.EmployeeModel;
 
+import com.gestionProyecto.gestion.models.PositionModel;
 import com.gestionProyecto.gestion.services.employeeService.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,18 +40,59 @@ public class EmployeeController {
     @PostMapping("/api/employees/save")
     public void save(@RequestBody EmployeeModel employeeModel){
 
-        if(employeeModel != null){
-            if(employeeModel.getFirstname() == null || employeeModel.getFirstname().isEmpty()){
+        String firstName = employeeModel.getFirstname();
+        String lastName = employeeModel.getLastname();
+        String email = employeeModel.getEmail();
+        String phone = employeeModel.getPhone();
+        String address = employeeModel.getAddress();
+        String date = employeeModel.getDateofadmission();
+        PositionModel position = employeeModel.getPosition();
+
+
+            if(firstName == null || firstName.isEmpty()){
                 throw new IllegalArgumentException("No se permite dejar vacio el campo nombre");
             }
-            else if(employeeModel.getFirstname().length()>40){
+            else if(firstName.length()>40){
                 throw new IllegalArgumentException("No se permite excederse mas de 40 caracteres");
             }
-            else if(!isValidField(employeeModel.getFirstname()) && !isValidField(employeeModel.getLastname())){
-                throw new IllegalArgumentException("No se permite numeros");
+
+            else if(lastName == null || lastName.isEmpty()){
+                throw new IllegalArgumentException("No se permite dejar vacio el campo apellido");
+            }
+            else if(lastName.length()>40){
+                throw new IllegalArgumentException("No se permite excederse mas de 40 caracteres");
             }
 
-        }
+            else if(email == null || email.isEmpty()){
+                throw new IllegalArgumentException("No se permite dejar vacio el campo correo");
+            }
+            else if(email.length()<10 || email.length()>255){
+                throw new IllegalArgumentException("No se permite excederse mas de 255 caracteres y menos de 10 caracteres");
+            }
+
+            else if(phone == null || phone.isEmpty()){
+                throw new IllegalArgumentException("No se permite dejar vacio el campo telefono");
+            }
+            else if(phone.length() != 8){
+                throw new IllegalArgumentException("La longitud del campo telefono debe ser exactamente de 8 caracteres");
+            }
+
+            else if(address == null || address.isEmpty()){
+                throw new IllegalArgumentException("No se permite dejar vacio el campo direccion");
+            }
+            else if(address.length()>100){
+                throw new IllegalArgumentException("No se permite excederse mas de 100 caracteres");
+            }
+
+            else if(position == null ){
+                throw new IllegalArgumentException("No se permite dejar vacio el campo posicion");
+            }
+
+            else if(!isValidField(firstName) || !isValidField(lastName)){
+                throw new IllegalArgumentException("No se permite numeros y caracteres");
+            }
+
+
 
 //        // Obtén la posición por su ID
 //        PositionModel position = positionService.getById(employeeModel.getPosition());

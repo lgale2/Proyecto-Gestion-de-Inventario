@@ -21,4 +21,5 @@ public class PositionModel {
     @Column(name="nameposition")
     private String namePosition;
 
+
 }
