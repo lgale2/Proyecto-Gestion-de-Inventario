@@ -26,6 +26,19 @@ public class UserController {
     public void save(@RequestBody UserModel userModel){
         service.save(userModel);
     }
+    
+    @PutMapping("/api/user/update/{id}")
+    public void update(@PathVariable Long id, @RequestBody UserModel userModel){
+        UserModel existingUser = service.getByIdUser(id);
+        
+        if (existingUser!= null){
+            existingUser.setUser(userModel.getUser());
+            existingUser.setEmail(userModel.getEmail());
+            existingUser.setPassword(userModel.getPassword());
+            existingUser.setIdEmployee(userModel.getIdEmployee());
+            service.update(existingUser);
+        }
+    }
 
     @DeleteMapping("/api/user/delete/{id}")
     public void delete(@PathVariable String id){

@@ -11,5 +11,7 @@ public interface IUserRoleService {
 
     public void save(UserRoleModel userRoleModel);
 
+    public void update(UserRoleModel userRoleModel);
+
     public void delete(Long id);
 }

@@ -12,6 +12,8 @@ public interface IPositionService {
 
     void save(PositionModel positionModel);
 
+    void update(PositionModel positionModel);
+
     void delete(Long id);
 
 }

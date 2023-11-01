@@ -28,6 +28,18 @@ public class UserService implements IUserService{
     }
 
     @Override
+    public void update(UserModel userModel) {
+        UserModel existingEntity = getByIdUser(userModel.getId());
+        if(existingEntity != null){
+            existingEntity.setUser(userModel.getUser());
+            existingEntity.setEmail(userModel.getEmail());
+            existingEntity.setPassword(userModel.getPassword());
+            existingEntity.setIdEmployee(userModel.getIdEmployee());
+            repository.save(existingEntity);
+        }
+    }
+
+    @Override
     public void delete(Long id) {
         repository.deleteById(id);
     }

@@ -14,4 +14,6 @@ public interface IEmployeeService {
     void remove(Long id);
 
     void save(EmployeeModel employeeModel);
+
+    void update(EmployeeModel employeeModel);
 }

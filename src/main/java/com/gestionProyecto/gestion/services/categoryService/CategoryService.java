@@ -31,5 +31,14 @@ public class CategoryService implements ICategoryService {
         repository.deleteById(id);
     }
 
+    @Override
+    public void update(CategoryModel categoryModel) {
+        CategoryModel existingEntity = getByIdCategory(categoryModel.getId_category());
+        if(existingEntity != null){
+            existingEntity.setCategory(categoryModel.getCategory());
+            repository.save(existingEntity);
+        }
+    }
+
 
 }

@@ -27,6 +27,19 @@ public class SupplierController {
         service.save(supplierModel);
     }
 
+    @PutMapping("/api/supplier/update/{id}")
+    public void update(@PathVariable Long id, @RequestBody SupplierModel supplierModel){
+        SupplierModel existingSupplier = service.getByIdSupplier(id);
+        
+        if(existingSupplier != null){
+            existingSupplier.setProveedor(supplierModel.getProveedor());
+            existingSupplier.setTelefono(supplierModel.getTelefono());
+            existingSupplier.setEmail(supplierModel.getEmail());
+            existingSupplier.setAddress(supplierModel.getAddress());
+            service.update(existingSupplier);
+        }
+    }
+
     @DeleteMapping("/api/supplier/delete/{id}")
     public void delete(@PathVariable String id){
         service.delete(Long.parseLong(id));

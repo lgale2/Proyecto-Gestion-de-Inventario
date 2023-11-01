@@ -27,6 +27,17 @@ public class UserRoleController {
         service.save(userRoleModel);
     }
 
+    @PutMapping("/api/userRole/update/{id}")
+    public void update(@PathVariable Long id, @RequestBody UserRoleModel userRoleModel){
+        UserRoleModel existingUserRole = service.getById(id);
+        
+        if(existingUserRole != null){
+            existingUserRole.setIdUser(userRoleModel.getIdUser());
+            existingUserRole.setIdRole(userRoleModel.getIdRole());
+            service.update(existingUserRole);
+        }
+    }
+    
     @DeleteMapping("/api/userRole/delete/{id}")
     public void delete(@PathVariable String id){
         service.delete(Long.parseLong(id));

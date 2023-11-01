@@ -30,4 +30,19 @@ public class EmployeeService implements IEmployeeService {
     public void save(EmployeeModel employeeModel) {
         employeeRepository.save(employeeModel);
     }
+
+    @Override
+    public void update(EmployeeModel employeeModel) {
+        EmployeeModel existingEntity = getById(employeeModel.getId());
+        if(existingEntity != null){
+            existingEntity.setFirstname(employeeModel.getFirstname());
+            existingEntity.setLastname(employeeModel.getLastname());
+            existingEntity.setEmail(employeeModel.getEmail());
+            existingEntity.setPhone(employeeModel.getPhone());
+            existingEntity.setAddress(employeeModel.getAddress());
+            existingEntity.setDateofadmission(employeeModel.getDateofadmission());
+            existingEntity.setPosition(employeeModel.getPosition());
+            employeeRepository.save(existingEntity);
+        }
+    }
 }

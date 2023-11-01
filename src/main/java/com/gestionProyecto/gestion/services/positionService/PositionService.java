@@ -29,6 +29,15 @@ public class PositionService implements IPositionService{
     }
 
     @Override
+    public void update(PositionModel positionModel) {
+        PositionModel existingEntity = getIdByPosition(positionModel.getIdPosition());
+        if(existingEntity != null){
+            existingEntity.setNamePosition(positionModel.getNamePosition());
+            repository.save(existingEntity);
+        }
+    }
+
+    @Override
     public void delete(Long id) {
         repository.deleteById(id);
     }

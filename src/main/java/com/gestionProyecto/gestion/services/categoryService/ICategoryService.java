@@ -10,4 +10,6 @@ public interface ICategoryService {
 
     void save(CategoryModel categoryModel);
     void delete(Long id);
+
+    void update(CategoryModel categoryModel);
 }

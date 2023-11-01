@@ -31,4 +31,21 @@ public class InventoryMovementController {
     public void delete(@PathVariable String id){
         service.delete(Long.parseLong(id));
     }
+    
+    @PutMapping("/api/inventoryMovement/update/{id}")
+    public void update(@PathVariable Long id, @RequestBody InventoryMovementsModel inventoryMovementsModel){
+        InventoryMovementsModel existingInventory = service.getById(id);
+        
+        if(existingInventory != null){
+            existingInventory.setIdProducto(inventoryMovementsModel.getIdProducto());
+            existingInventory.setMovementType(inventoryMovementsModel.getMovementType());
+            existingInventory.setFechaMovimiento(inventoryMovementsModel.getFechaMovimiento());
+            existingInventory.setQuantity(inventoryMovementsModel.getQuantity());
+            existingInventory.setPrecioUnitario(inventoryMovementsModel.getPrecioUnitario());
+            existingInventory.setTotal(inventoryMovementsModel.getTotal());
+            existingInventory.setPreferenciaFactura(inventoryMovementsModel.getPreferenciaFactura());
+            existingInventory.setId_empleado(inventoryMovementsModel.getId_empleado());
+            service.update(existingInventory);
+        }
+    }
 }

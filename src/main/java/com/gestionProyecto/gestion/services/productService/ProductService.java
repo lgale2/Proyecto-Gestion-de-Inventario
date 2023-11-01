@@ -27,6 +27,23 @@ public class ProductService implements IProductService{
     }
 
     @Override
+    public void update(ProductModel productModel) {
+        ProductModel existingEntity = getByIdProduct(productModel.getIdProducto());
+
+        if(existingEntity!=null){
+            existingEntity.setProducto(productModel.getProducto());
+            existingEntity.setDescripcion(productModel.getDescripcion());
+            existingEntity.setPrecioCompra(productModel.getPrecioCompra());
+            existingEntity.setPrecioVenta(productModel.getPrecioVenta());
+            existingEntity.setCantidadStock(productModel.getCantidadStock());
+            existingEntity.setIdCategoria(productModel.getIdCategoria());
+            existingEntity.setIdProveedor(productModel.getIdProveedor());
+            repository.save(existingEntity);
+
+        }
+    }
+
+    @Override
     public void delete(Long id) {
         repository.deleteById(id);
     }

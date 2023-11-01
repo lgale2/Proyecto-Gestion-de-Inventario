@@ -11,5 +11,6 @@ public interface ISupplierService {
 
     void save(SupplierModel supplierModel);
 
+    void update(SupplierModel supplierModel);
     void delete(Long id);
 }

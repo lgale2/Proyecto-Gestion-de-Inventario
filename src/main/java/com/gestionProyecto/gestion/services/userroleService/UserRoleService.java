@@ -29,6 +29,17 @@ public class UserRoleService implements IUserRoleService{
     }
 
     @Override
+    public void update(UserRoleModel userRoleModel) {
+        UserRoleModel existingEntity = getById(userRoleModel.getId());
+
+        if(existingEntity != null){
+            existingEntity.setIdUser(userRoleModel.getIdUser());
+            existingEntity.setIdRole(userRoleModel.getIdRole());
+            repository.save(existingEntity);
+        }
+    }
+
+    @Override
     public void delete(Long id) {
         repository.deleteById(id);
     }

@@ -25,14 +25,10 @@ public class EmployeeController {
         return employeeService.getAll();
   }
 
-
-
-
     @GetMapping("/api/employees/{id}")
     public EmployeeModel getById( @PathVariable String id){
         return employeeService.getById(Long.parseLong(id));
     }
-
 
     @DeleteMapping("/api/employees/delete/{id}")
     public void remove(@PathVariable String id){
@@ -80,5 +76,20 @@ public class EmployeeController {
     private boolean isValidField(String value){
         Pattern pattern = Pattern.compile("^[a-zA-Z ]*$");
         return pattern.matcher(value).matches();
+    }
+
+    @PutMapping("/api/employee/update/{id}")
+    public void update(@PathVariable Long id, @RequestBody EmployeeModel employeeModel){
+        EmployeeModel existingEmployee = employeeService.getById(id);
+        if(existingEmployee!= null){
+            existingEmployee.setFirstname(employeeModel.getFirstname());
+            existingEmployee.setLastname(employeeModel.getLastname());
+            existingEmployee.setEmail(employeeModel.getEmail());
+            existingEmployee.setPhone(employeeModel.getPhone());
+            existingEmployee.setAddress(employeeModel.getAddress());
+            existingEmployee.setDateofadmission(employeeModel.getDateofadmission());
+            existingEmployee.setPosition(employeeModel.getPosition());
+            employeeService.update(existingEmployee);
+        }
     }
 }

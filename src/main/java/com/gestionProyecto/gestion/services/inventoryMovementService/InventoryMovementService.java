@@ -33,6 +33,17 @@ public class InventoryMovementService implements IinventoryMovementService{
 
     @Override
     public void update(InventoryMovementsModel inventoryMovementsModel) {
-
+        InventoryMovementsModel existingEntity = getById(inventoryMovementsModel.getId_movimiento());
+        if(existingEntity != null){
+            existingEntity.setIdProducto(inventoryMovementsModel.getIdProducto());
+            existingEntity.setMovementType(inventoryMovementsModel.getMovementType());
+            existingEntity.setFechaMovimiento(inventoryMovementsModel.getFechaMovimiento());
+            existingEntity.setQuantity(inventoryMovementsModel.getQuantity());
+            existingEntity.setPrecioUnitario(inventoryMovementsModel.getPrecioUnitario());
+            existingEntity.setTotal(inventoryMovementsModel.getTotal());
+            existingEntity.setPreferenciaFactura(inventoryMovementsModel.getPreferenciaFactura());
+            existingEntity.setId_empleado(inventoryMovementsModel.getId_empleado());
+            repository.save(existingEntity);
+        }
     }
 }

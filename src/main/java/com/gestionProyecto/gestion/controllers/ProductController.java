@@ -29,6 +29,23 @@ public class ProductController {
         service.save(productModel);
     }
 
+    @PutMapping("/api/product/update/{id}")
+    public void update(@PathVariable Long id, @RequestBody ProductModel productModel){
+        ProductModel existingProduct = service.getByIdProduct(id);
+        
+        if(existingProduct != null){
+            existingProduct.setProducto(productModel.getProducto());
+            existingProduct.setDescripcion(productModel.getDescripcion());
+            existingProduct.setPrecioCompra(productModel.getPrecioCompra());
+            existingProduct.setPrecioVenta(productModel.getPrecioVenta());
+            existingProduct.setCantidadStock(productModel.getCantidadStock());
+            existingProduct.setIdCategoria(productModel.getIdCategoria());
+            existingProduct.setIdProveedor(productModel.getIdProveedor());
+            service.update(existingProduct);
+        }
+    }
+    
+    
     @DeleteMapping("/api/product/delete/{id}")
     public void delete(@PathVariable String id){
         service.delete(Long.parseLong(id));

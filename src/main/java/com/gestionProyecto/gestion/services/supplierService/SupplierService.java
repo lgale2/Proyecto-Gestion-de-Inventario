@@ -27,6 +27,19 @@ public class SupplierService implements ISupplierService{
     }
 
     @Override
+    public void update(SupplierModel supplierModel) {
+        SupplierModel existingEntity = getByIdSupplier(supplierModel.getIdSupplier());
+
+        if(existingEntity != null){
+            existingEntity.setProveedor(supplierModel.getProveedor());
+            existingEntity.setTelefono(supplierModel.getTelefono());
+            existingEntity.setEmail(supplierModel.getEmail());
+            existingEntity.setAddress(supplierModel.getAddress());
+            repository.save(existingEntity);
+        }
+    }
+
+    @Override
     public void delete(Long id) {
         repository.deleteById(id);
     }

@@ -29,6 +29,16 @@ public class PositionController {
         service.save(positionModel);
     }
 
+    @PutMapping("/api/position/update/{id}")
+    public void update(@PathVariable Long id, @RequestBody PositionModel positionModel){
+        PositionModel existingPosition = service.getIdByPosition(id);
+
+        if(existingPosition != null){
+            existingPosition.setNamePosition(positionModel.getNamePosition());
+            service.update(existingPosition);
+        }
+    }
+
     @DeleteMapping("/api/position/delete/{id}")
     public void delete(@PathVariable String id){
         service.delete(Long.parseLong(id));

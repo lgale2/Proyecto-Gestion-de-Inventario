@@ -32,5 +32,16 @@ public class CategoryController {
         service.delete(Long.parseLong(id));
     }
 
+    @PutMapping("/api/categories/update/{id}")
+    public void update(@PathVariable Long id, @RequestBody CategoryModel categoryModel){
+        CategoryModel existingCategory = service.getByIdCategory(id);
+        if(existingCategory != null){
+            existingCategory.setCategory(categoryModel.getCategory());
+            service.update(existingCategory);
+        }
+
+
+    }
+
 
 }
