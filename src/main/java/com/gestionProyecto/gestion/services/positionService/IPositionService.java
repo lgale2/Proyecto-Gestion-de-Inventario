@@ -16,4 +16,5 @@ public interface IPositionService {
 
     void delete(Long id);
 
+    boolean exists(Long idPosition);
 }

@@ -16,4 +16,6 @@ public interface IEmployeeService {
     void save(EmployeeModel employeeModel);
 
     void update(EmployeeModel employeeModel);
+
+    boolean exists(Long id);
 }

@@ -41,4 +41,9 @@ public class PositionService implements IPositionService{
     public void delete(Long id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public boolean exists(Long idPosition) {
+        return repository.existsById(idPosition);
+    }
 }

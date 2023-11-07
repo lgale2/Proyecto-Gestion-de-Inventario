@@ -45,4 +45,9 @@ public class EmployeeService implements IEmployeeService {
             employeeRepository.save(existingEntity);
         }
     }
+
+    @Override
+    public boolean exists(Long id) {
+        return employeeRepository.existsById(id);
+    }
 }
