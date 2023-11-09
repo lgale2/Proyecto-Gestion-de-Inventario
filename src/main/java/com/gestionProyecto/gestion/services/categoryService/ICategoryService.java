@@ -12,4 +12,6 @@ public interface ICategoryService {
     void delete(Long id);
 
     void update(CategoryModel categoryModel);
+
+    boolean exists(Long categoryId);
 }

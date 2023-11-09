@@ -24,6 +24,15 @@ public class CategoryController {
 
     @GetMapping("/api/categoryById/{id}")
     public CategoryModel getById(@PathVariable String id){
+        if (id == null || !id.matches("\\d+")){
+            throw new RuntimeException("El id proporcionado no es valido.");
+        }
+
+        Long categoryId = Long.parseLong(id);
+
+        if (!service.exists(categoryId)){
+            throw new RuntimeException("No se encontró ninguna categoria con el ID proporcionado. ");
+        }
         return service.getByIdCategory(Long.parseLong(id));
     }
 
@@ -61,9 +70,23 @@ public class CategoryController {
     }
 
     @PutMapping("/api/categories/update/{id}")
-    public void update(@PathVariable Long id, @RequestBody CategoryModel categoryModel){
-        CategoryModel existingCategory = service.getByIdCategory(id);
+    public void update(@PathVariable String id, @RequestBody CategoryModel categoryModel){
+
+        if (id == null || !id.matches("\\d+")) {
+            throw new RuntimeException("El ID proporcionado no es válido.");
+        }
+
+        Long categoryId = Long.parseLong(id);
+
+        if (!service.exists(categoryId)) {
+            throw new RuntimeException("No se encontró ninguna categoria con el ID proporcionado.");
+        }
+
+        CategoryModel existingCategory = service.getByIdCategory(Long.parseLong(id));
         if(existingCategory != null){
+
+            String category = categoryModel.getCategory();
+            validateField(category, "Categoria", 3, 40, false, true);
             existingCategory.setCategory(categoryModel.getCategory());
             service.update(existingCategory);
         }

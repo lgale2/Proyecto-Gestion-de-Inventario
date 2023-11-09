@@ -40,5 +40,10 @@ public class CategoryService implements ICategoryService {
         }
     }
 
+    @Override
+    public boolean exists(Long categoryId) {
+        return repository.existsById(categoryId);
+    }
+
 
 }
