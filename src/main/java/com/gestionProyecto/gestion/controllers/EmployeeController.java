@@ -47,6 +47,15 @@ public class EmployeeController {
 
     @DeleteMapping("/api/employees/delete/{id}")
     public void remove(@PathVariable String id){
+        if (id == null || !id.matches("\\d+")){
+            throw new RuntimeException("El ID proporcionado no es valido.");
+        }
+
+        Long employeeId = Long.parseLong(id);
+        if (!employeeService.exists(employeeId)){
+            throw new RuntimeException("No se encontro ningun empleado con el ID proporcionado");
+        }
+
         employeeService.remove(Long.parseLong(id));
     }
 
@@ -78,6 +87,10 @@ public class EmployeeController {
 
          if (position == null || position.getIdPosition() == null || !positionService.exists(position.getIdPosition())){
              throw new RuntimeException("La posición seleccionada no es válida.");
+         }
+
+         if(employeeService.existsByEmail(email)){
+             throw new RuntimeException("El correo electronico ya esta registrado.");
          }
 
         employeeService.save(employeeModel);
@@ -122,16 +135,55 @@ public class EmployeeController {
 
 
     @PutMapping("/api/employee/update/{id}")
-    public void update(@PathVariable Long id, @RequestBody EmployeeModel employeeModel){
-        EmployeeModel existingEmployee = employeeService.getById(id);
+    public void update(@PathVariable String id, @RequestBody EmployeeModel employeeModel){
+        if (id == null || !id.matches("\\d+")) {
+            throw new RuntimeException("El ID proporcionado no es válido.");
+        }
+
+        Long employeeId = Long.parseLong(id);
+
+        if (!employeeService.exists(employeeId)) {
+            throw new RuntimeException("No se encontró ningún empleado con el ID proporcionado.");
+        }
+
+        EmployeeModel existingEmployee = employeeService.getById(Long.parseLong(id));
+
+
         if(existingEmployee!= null){
-            existingEmployee.setFirstname(employeeModel.getFirstname());
-            existingEmployee.setLastname(employeeModel.getLastname());
-            existingEmployee.setEmail(employeeModel.getEmail());
-            existingEmployee.setPhone(employeeModel.getPhone());
-            existingEmployee.setAddress(employeeModel.getAddress());
-            existingEmployee.setDateofadmission(employeeModel.getDateofadmission());
-            existingEmployee.setPosition(employeeModel.getPosition());
+
+
+            String firstName = employeeModel.getFirstname();
+            String lastName = employeeModel.getLastname();
+            String email = employeeModel.getEmail();
+            String phone = employeeModel.getPhone();
+            String address = employeeModel.getAddress();
+            String date = employeeModel.getDateofadmission();
+            PositionModel position = employeeModel.getPosition();
+
+            validateField(firstName, "Nombre", 3, 40, false, true);
+            validateField(lastName, "Apellido", 3, 40, false, true);
+            validateField(email, "Correo Electronico", 10, 100,false, true);
+            validateField(phone, "Telefono",8, 8, false, false);
+            validateField(address, "Direccion", 3, 100, false, true);
+
+
+            if (!isValidField(firstName) || !isValidField(lastName)){
+                throw new RuntimeException("No se permiten numeros y caracteres en el campo.");
+            }
+            if (!isValidEmail(email)) {
+                throw new RuntimeException("El correo electronico no es valido");
+            }
+
+            if (position == null || position.getIdPosition() == null || !positionService.exists(position.getIdPosition())){
+                throw new RuntimeException("La posición seleccionada no es válida.");
+            }
+            existingEmployee.setFirstname(firstName);
+            existingEmployee.setLastname(lastName);
+            existingEmployee.setEmail(email);
+            existingEmployee.setPhone(phone);
+            existingEmployee.setAddress(address);
+            existingEmployee.setDateofadmission(date);
+            existingEmployee.setPosition(position);
             employeeService.update(existingEmployee);
         }
     }

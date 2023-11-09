@@ -18,4 +18,6 @@ public interface IEmployeeService {
     void update(EmployeeModel employeeModel);
 
     boolean exists(Long id);
+
+    boolean existsByEmail(String email);
 }

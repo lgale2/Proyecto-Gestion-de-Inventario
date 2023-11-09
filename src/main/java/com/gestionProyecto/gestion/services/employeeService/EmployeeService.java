@@ -50,4 +50,9 @@ public class EmployeeService implements IEmployeeService {
     public boolean exists(Long id) {
         return employeeRepository.existsById(id);
     }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return employeeRepository.existsByEmail(email);
+    }
 }

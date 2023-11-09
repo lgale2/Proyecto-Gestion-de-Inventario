@@ -33,19 +33,21 @@ public class CategoryController {
         String category = categoryModel.getCategory();
 
 
-            if (category == null || category.isEmpty()){
-                throw new RuntimeException("No se permite dejar vacio el campo categoria");
-            } else if (category.length()>40) {
-                throw new RuntimeException("No se permite excederse mas de 50 caracteres el campo categoria");
-            } else if (!isValidField(category)) {
-                throw new RuntimeException("No se permiten numeros y caracteres especiales en el campo categoria");
-            }
-            if (repository.existsByCategory(category)){
-                throw new RuntimeException("La categoria ya existe");
-            }
+       validateField(category, "Categoria", 3, 40, false, true);
 
 
         service.save(categoryModel);
+    }
+
+    private void validateField(String fieldValue, String fieldName, int minLength, int maxLength, boolean allowEmty, boolean allowLetters){
+        if (fieldValue == null || fieldValue.isEmpty()){
+            if (!allowEmty){
+                throw new RuntimeException("No se permite dejar el campo "+fieldName+ " vacio.");
+            } else if (fieldValue.length()<minLength || fieldValue.length()>maxLength) {
+
+                throw new RuntimeException("La longitud del campo "+fieldName+ " debe estar entre "+minLength + " y " + maxLength);
+            }
+        }
     }
 
     private boolean isValidField(String value){
