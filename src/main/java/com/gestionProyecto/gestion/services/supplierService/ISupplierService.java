@@ -15,4 +15,6 @@ public interface ISupplierService {
     void delete(Long id);
 
     boolean exists(Long idSupplier);
+
+    boolean existsByEmail(String email);
 }

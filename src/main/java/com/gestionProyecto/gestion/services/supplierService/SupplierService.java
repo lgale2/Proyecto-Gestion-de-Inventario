@@ -48,4 +48,9 @@ public class SupplierService implements ISupplierService{
     public boolean exists(Long idSupplier) {
         return repository.existsById(idSupplier);
     }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return repository.existByEmail(email);
+    }
 }
