@@ -16,4 +16,6 @@ public interface IinventoryMovementService {
      void delete(Long id);
 
      void update(InventoryMovementsModel inventoryMovementsModel);
+
+    boolean exists(Long inventoryID);
 }

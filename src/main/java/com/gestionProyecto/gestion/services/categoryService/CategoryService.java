@@ -45,5 +45,10 @@ public class CategoryService implements ICategoryService {
         return repository.existsById(categoryId);
     }
 
+    @Override
+    public boolean existsCategory(String category) {
+        return repository.existsByCategory(category);
+    }
+
 
 }

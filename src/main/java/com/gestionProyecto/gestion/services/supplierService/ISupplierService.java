@@ -13,4 +13,6 @@ public interface ISupplierService {
 
     void update(SupplierModel supplierModel);
     void delete(Long id);
+
+    boolean exists(Long idSupplier);
 }

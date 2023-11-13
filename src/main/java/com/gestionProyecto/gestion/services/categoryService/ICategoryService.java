@@ -14,4 +14,6 @@ public interface ICategoryService {
     void update(CategoryModel categoryModel);
 
     boolean exists(Long categoryId);
+
+    boolean existsCategory(String category);
 }

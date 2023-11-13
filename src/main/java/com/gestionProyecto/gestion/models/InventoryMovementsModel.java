@@ -19,17 +19,17 @@ public class InventoryMovementsModel {
     @JoinColumn(name = "id_product")
     private ProductModel idProducto;
 
-    @Enumerated(EnumType.STRING)
+   // @Enumerated(EnumType.STRING)
     @Column(name = "movement_type")
-    private MovementType movementType;
+    private String movementType;
     @Column(name = "movement_date")
     private String fechaMovimiento;
     @Column(name = "quantity")
-    private Integer quantity;
+    private String quantity;
     @Column(name = "unit_price")
-    private Double precioUnitario;
+    private String precioUnitario;
     @Column(name = "total")
-    private Double total;
+    private String total;
     @Column(name = "invoice_reference")
     private String preferenciaFactura;
 
@@ -37,10 +37,10 @@ public class InventoryMovementsModel {
     @JoinColumn(name = "id_employee")
     private EmployeeModel id_empleado;
 
-    public enum MovementType {
-        E,
-        S// Otras opciones como SALIDA
-    }
+//    public enum MovementType implements CharSequence {
+//        E,
+//        S// Otras opciones como SALIDA
+//    }
 
 }
 

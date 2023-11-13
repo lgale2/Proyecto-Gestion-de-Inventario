@@ -46,4 +46,9 @@ public class InventoryMovementService implements IinventoryMovementService{
             repository.save(existingEntity);
         }
     }
+
+    @Override
+    public boolean exists(Long inventoryID) {
+        return repository.existsById(inventoryID);
+    }
 }

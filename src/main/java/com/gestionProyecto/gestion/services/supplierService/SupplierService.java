@@ -43,4 +43,9 @@ public class SupplierService implements ISupplierService{
     public void delete(Long id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public boolean exists(Long idSupplier) {
+        return repository.existsById(idSupplier);
+    }
 }

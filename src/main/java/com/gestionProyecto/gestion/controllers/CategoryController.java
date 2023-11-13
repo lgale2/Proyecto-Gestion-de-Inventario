@@ -45,6 +45,15 @@ public class CategoryController {
        validateField(category, "Categoria", 3, 40, false, true);
 
 
+        if (!isValidField(category) || !isValidField(category)){
+            throw new RuntimeException("No se permiten numeros y caracteres en el campo categoria.");
+        }
+
+        if(service.existsCategory(category)){
+            throw new RuntimeException("La categoria ya esta registrada.");
+        }
+
+
         service.save(categoryModel);
     }
 
@@ -66,6 +75,17 @@ public class CategoryController {
 
     @DeleteMapping("/api/categories/delete/{id}")
     public void delete(@PathVariable String id){
+
+        if (id == null || !id.matches("\\d+")){
+            throw new RuntimeException("El ID proporcionado no es valido.");
+        }
+
+        Long categoryId = Long.parseLong(id);
+        if (!service.exists(categoryId)){
+            throw new RuntimeException("No se encontro ninguna categoria con el ID proporcionado");
+        }
+
+
         service.delete(Long.parseLong(id));
     }
 
@@ -88,6 +108,10 @@ public class CategoryController {
             String category = categoryModel.getCategory();
             validateField(category, "Categoria", 3, 40, false, true);
             existingCategory.setCategory(categoryModel.getCategory());
+            if (!isValidField(category) || !isValidField(category)){
+                throw new RuntimeException("No se permiten numeros y caracteres en el campo categoria.");
+            }
+
             service.update(existingCategory);
         }
 

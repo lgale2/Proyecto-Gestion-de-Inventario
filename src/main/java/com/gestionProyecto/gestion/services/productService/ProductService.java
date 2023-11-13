@@ -47,4 +47,9 @@ public class ProductService implements IProductService{
     public void delete(Long id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public boolean exists(Long idProducto) {
+        return repository.existsById(idProducto);
+    }
 }
