@@ -51,6 +51,6 @@ public class SupplierService implements ISupplierService{
 
     @Override
     public boolean existsByEmail(String email) {
-        return repository.existByEmail(email);
+        return repository.existsByEmail(email);
     }
 }
