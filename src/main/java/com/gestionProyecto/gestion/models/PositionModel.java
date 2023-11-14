@@ -19,7 +19,7 @@ public class PositionModel {
     @Column(name = "id")
     private Long idPosition;
     @Column(name="nameposition")
-    private String namePosition;
+    private String position;
 
 
 }

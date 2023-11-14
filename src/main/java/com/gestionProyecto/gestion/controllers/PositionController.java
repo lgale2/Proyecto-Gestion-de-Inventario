@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.regex.Pattern;
 
+
 @RestController
 public class PositionController {
     @Autowired
@@ -38,44 +39,73 @@ public class PositionController {
     @PostMapping("/api/position/save")
     public void save(@RequestBody PositionModel positionModel){
 
-        String position = positionModel.getNamePosition();
+        String position = positionModel.getPosition();
 
-        isValidField(position, "Posicion", 3, 40, false);
+        validateField(position, "Posicion", 3, 40, false);
 
-        if (!isValidFields(position)){
-            throw new RuntimeException("No se permiten numeros y caracteres en el campo.");
+
+        if (!isValidField(position) || !isValidField(position)){
+            throw new RuntimeException("No se permiten numeros y caracteres en el campo posicion.");
         }
+
+        if(service.existsPosition(position)){
+            throw new RuntimeException("La posicion ya esta registrada.");
+        }
+
 
         service.save(positionModel);
     }
 
-    private boolean isValidFields(String value){
+
+
+    private void validateField(String fieldValue, String fieldName, int minLength, int maxLength, boolean allowEmty){
+        if (fieldValue == null || fieldValue.isEmpty()){
+            if (!allowEmty){
+                throw new RuntimeException("No se permite dejar el campo "+fieldName+ " vacio.");
+            } else if (fieldValue.length()<minLength || fieldValue.length()>maxLength) {
+
+                throw new RuntimeException("La longitud del campo "+fieldName+ " debe estar entre "+minLength + " y " + maxLength);
+            }
+        }
+    }
+
+    private boolean isValidField(String value){
         Pattern pattern = Pattern.compile("^[a-zA-Z ]*$");
         return pattern.matcher(value).matches();
     }
 
-    public void isValidField(String fieldName, String fieldValue, int minLength, int maxLength, boolean allowEmpty ){
 
-        if(fieldValue == null || fieldValue.isEmpty()){
-            if (!allowEmpty){
-                throw new RuntimeException("No se permite dejar vacio el campo "+ fieldName);
-            }
-        } else if (fieldValue.length()<minLength || fieldValue.length()>maxLength ) {
+    @PutMapping("/api/position/update/{id}")
+    public void update(@PathVariable String id, @RequestBody PositionModel positionModel){
 
-            throw new RuntimeException("La longitud del campo " + fieldName + " debe estar entre " + minLength + " y " + maxLength + " caracteres.");
+        if (id == null || !id.matches("\\d+")){
+            throw new RuntimeException("El ID proporcionado no es valido.");
+        }
+
+        Long positionId = Long.parseLong(id);
+        if (!service.exists(positionId)){
+            throw new RuntimeException("No se encontro ninguna posicion con el ID proporcionado");
         }
 
 
 
-    }
-
-
-    @PutMapping("/api/position/update/{id}")
-    public void update(@PathVariable Long id, @RequestBody PositionModel positionModel){
-        PositionModel existingPosition = service.getIdByPosition(id);
+        PositionModel existingPosition = service.getIdByPosition(Long.parseLong(id));
 
         if(existingPosition != null){
-            existingPosition.setNamePosition(positionModel.getNamePosition());
+            String position = positionModel.getPosition();
+
+            validateField(position, "Posicion", 3, 40, false);
+
+
+            if (!isValidField(position) || !isValidField(position)){
+                throw new RuntimeException("No se permiten numeros y caracteres en el campo posicion.");
+            }
+
+            if(service.existsPosition(position)){
+                throw new RuntimeException("La posicion ya esta registrada.");
+            }
+
+            existingPosition.setPosition(positionModel.getPosition());
             service.update(existingPosition);
         }
     }

@@ -32,7 +32,7 @@ public class PositionService implements IPositionService{
     public void update(PositionModel positionModel) {
         PositionModel existingEntity = getIdByPosition(positionModel.getIdPosition());
         if(existingEntity != null){
-            existingEntity.setNamePosition(positionModel.getNamePosition());
+            existingEntity.setPosition(positionModel.getPosition());
             repository.save(existingEntity);
         }
     }
@@ -45,5 +45,10 @@ public class PositionService implements IPositionService{
     @Override
     public boolean exists(Long idPosition) {
         return repository.existsById(idPosition);
+    }
+
+    @Override
+    public boolean existsPosition(String position) {
+        return repository.existsByPosition(position);
     }
 }
